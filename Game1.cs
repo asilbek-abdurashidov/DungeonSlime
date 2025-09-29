@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,6 +7,8 @@ namespace DungeonSlime;
 
 public class Game1 : Game
 {
+    private int updateCounter = 0;
+    private int drawCounter = 0;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
@@ -16,37 +19,31 @@ public class Game1 : Game
         IsMouseVisible = true;
     }
 
-    protected override void Initialize()
-    {
-        // TODO: Add your initialization logic here
-
-        base.Initialize();
-    }
-
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        // TODO: use this.Content to load your game content here
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-            Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
+        updateCounter++;
+        Console.WriteLine("Updating " + updateCounter);
+        var isBackPressed = GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed;
+        var isEscapePressed = Keyboard.GetState().IsKeyDown(Keys.Escape);
 
-        // TODO: Add your update logic here
+        if (isBackPressed || isEscapePressed)
+        {
+            Exit();
+        }
 
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
+        drawCounter++;
+        Console.WriteLine("Drawing " + drawCounter);
         GraphicsDevice.Clear(Color.CornflowerBlue);
-
-        // TODO: Add your drawing code here
-
         base.Draw(gameTime);
     }
 }
